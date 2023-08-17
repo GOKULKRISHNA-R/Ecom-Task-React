@@ -1,0 +1,147 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: "Roboto", sans-serif;
+  vertical-align: baseline;
+  box-sizing: border-box;
+  color: aliceblue;
+}
+
+body {
+  background-repeat: no-repeat;
+  background-image: url(./assets/header-gradient.svg);
+  background-color: black;
+  background-size: 100%;
+  position: relative;
+}
+
+button {
+  white-space: nowrap;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.navbar {
+  width: calc(100% / 4);
+  min-width: 300px;
+  background-color: rgba(245, 222, 179, 0.151);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 30px auto 90px auto;
+  border-radius: 25px;
+}
+
+.navbar > p {
+  color: cornsilk;
+  letter-spacing: 1px;
+  padding: 12px;
+}
+
+#home {
+  margin-bottom: 120x;
+}
+
+#home,
+#profile {
+  width: 100%;
+  color: aliceblue;
+}
+
+.nav-actions {
+  position: absolute;
+  top: 3px;
+  right: 36px;
+}
+
+.nav-action-link {
+  padding: 9px;
+}
+
+.nav-action-link-img {
+  height: 36px;
+  padding: 0px;
+  background: #ffffff;
+  border-radius: 50px;
+}
+
+.h2 {
+  font-size: x-large;
+  font-weight: 6;
+}
+
+.form-container {
+  position: relative;
+  min-width: 540px;
+  background: linear-gradient(#212121, #212121) padding-box,linear-gradient(145deg, transparent 35%, #e81cff, #40c9ff) border-box;
+  border: 2px solid transparent;
+  padding: 32px 24px;
+  border-radius: 16px;
+}
+
+
+.hide {
+  display: none;
+}
+
+label,
+input {
+  display: inline-block;
+}
+
+.Form {
+  color: aliceblue;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+input,
+select {
+  border-radius: 10px;
+  outline: 0;
+  background-color: rgba(255, 255, 255, 0.524);
+  padding: 12px 16px;
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.close > img {
+  height: 36px;
+  padding: 6px 12px;
+}
+
+
+.btn {
+  transition: all 0.3s ease-in-out;
+  font-family: "Dosis", sans-serif;
+}
+
+.btn {
+  margin: 0px auto;
+  grid-column: 1 / span 2;
+  width: 90px;
+  height: 30;
+  padding: 3px 6px;
+  border-radius: 6px;
+  background-image: linear-gradient(135deg, #feb692 0%, #ea5455 100%);
+  box-shadow: 0 20px 30px -6px rgba(238, 103, 97, 0.5);
+  font-size: 18px;
+  color: white;
+}
+
+.btn:hover {
+  transform: translateY(3px);
+  box-shadow: none;
+}
+
+.btn:active {
+  opacity: 0.5;
+}
