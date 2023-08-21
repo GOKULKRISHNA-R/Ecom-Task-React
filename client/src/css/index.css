@@ -38,3 +38,76 @@ code {
   font-size: x-large;
   font-weight: 6;
 }
+
+button {
+  white-space: nowrap;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.line-1 {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.line-2 {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.line-4 {
+  width: 81px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.line-5{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 70%;
+  margin-bottom: 12px;
+}
+
+.line-5 > button {
+  padding: 2px;
+}
+
+.line-5 > p , .line-6 > p {
+  color: rgba(255, 217, 0, 0.82);
+  font-weight: 900;
+  padding: 9px;
+  background: rgba(255, 217, 0, 0.163);
+  border-radius: 25px;
+}
+
+.b {
+  border: 2px #ffbf00 solid;
+}
+
+.p {
+  padding: 2px 6px;
+  font-size: 16px;
+}
+
+.x {
+  padding: 0px 8px;
+  font-size: 20px;
+}
+
+label,
+input {
+  display: inline-block;
+}
+
+input,
+select {
+  border-radius: 10px;
+  outline: 0;
+  background-color: rgba(255, 255, 255, 0.524);
+  padding: 12px 16px;
+}

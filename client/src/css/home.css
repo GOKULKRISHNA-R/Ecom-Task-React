@@ -1,3 +1,5 @@
+/* product-actions  */
+
 .product-actions {
   position: absolute;
   top: 60px;
@@ -42,4 +44,137 @@
   font-size: medium;
   right: 51px;
   margin-top: 9px;
+}
+
+/* products */
+
+.products {
+  height: cals;
+  display: grid;
+  gap: 36px;
+  justify-content: center;
+  margin: 60px 120px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.product {
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(255, 217, 0, 0.82);
+  border-radius: 25px;
+  padding: 12px;
+  position: relative;
+}
+
+.product-img {
+  background-color: rgba(255, 217, 0, 0.174);
+  border-radius: 25px;
+  margin-bottom: 12px;
+}
+
+.product-desc {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+}
+
+.product-category {
+  color: #c371e7cf;
+  padding: 3px 9px;
+  border-radius: 4px;
+  border: 1px #c471e750 solid;
+}
+
+.image {
+  border-radius: 25px 25px 0px 0px;
+  height: 200px;
+  width: 100%;
+  object-fit: contain;
+}
+
+.addToCartImg {
+  height: 36px;
+  padding: 6px 12px;
+}
+
+.actions > button {
+  height: 30px;
+  padding: 6px 18px;
+  border-radius: 6px;
+  margin: 4px;
+}
+
+.delete-btn {
+  background-color: #a52a2a;
+}
+
+.edit-btn {
+  background-color: #ffbf00;
+  color: black;
+}
+
+.butn {
+  height: 36px;
+  padding: 6px 12px;
+}
+
+/* form-container */
+
+.form-container {
+  position: relative;
+  min-width: 540px;
+  background: linear-gradient(#212121, #212121) padding-box,
+    linear-gradient(145deg, transparent 35%, #e81cff, #40c9ff) border-box;
+  border: 2px solid transparent;
+  padding: 32px 24px;
+  border-radius: 16px;
+}
+
+.Form {
+  color: aliceblue;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+@media (min-width: 780px) {
+  .margin {
+    padding: 100px 120px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .margin {
+    padding: 100px 360px;
+  }
+}
+
+.btn {
+  transition: all 0.3s ease-in-out;
+  margin: 0px auto;
+  grid-column: 1 / span 2;
+  width: 90px;
+  height: 30;
+  padding: 3px 6px;
+  border-radius: 6px;
+  background-image: linear-gradient(135deg, #feb692 0%, #ea5455 100%);
+  box-shadow: 0 20px 30px -6px rgba(238, 103, 97, 0.5);
+  font-size: 18px;
+  color: white;
+}
+
+.btn:hover {
+  transform: translateY(3px);
+  box-shadow: none;
+}
+
+.btn:active {
+  opacity: 0.5;
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
