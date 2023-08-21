@@ -149,7 +149,7 @@ const Home = () => {
             </button>
           </div>
           <div className="products">
-            {products.map((product) => (
+            {products.map((product) => 
               <div className="product">
                 <div className="product-img">
                   <img
@@ -200,7 +200,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-            ))}
+            )}
           </div>
         </div>
       ) : (
