@@ -15,11 +15,21 @@
   padding: 12px;
 }
 
+
 .nav-actions {
   position: absolute;
-  top: 3px;
-  right: 36px;
+  top: 57px;
+  right: 12px;
 }
+
+@media (min-width: 580px){
+  .nav-actions {
+    position: absolute;
+    top: 3px;
+    right: 36px;
+  }
+}
+
 
 .link {
   padding: 9px;

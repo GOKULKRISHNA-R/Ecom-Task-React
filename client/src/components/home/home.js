@@ -4,166 +4,187 @@ import "./../../css/home.css";
 import addtocart from "../../assets/addcart.png";
 import plus from "../../assets/plus.png";
 import close from "../../assets/close.png";
-import { fetchProducts } from "../../redux/actionCreators";
 import store from "../../redux/store";
+import { fetchProducts } from "../../redux/actionCreators";
 import { useSelector } from "react-redux";
-  
+
 const Home = () => {
   let [showCheckBox, toggleShowCheckBox] = useState(false);
   let [whatToShow, setWhatToShow] = useState("Home");
+
   const [products, setProducts] = useState([]);
 
-  const temp = useSelector(state=>state.products);
-  
-  useEffect(() => { 
-    console.log("hello"); 
-    store.dispatch(fetchProducts()); 
+  const temp = useSelector((state) => state.products);
+  const loading = useSelector((state) => state.loading);
+  const error = useSelector((state) => state.error);
+
+  useEffect(() => {
+    store.dispatch(fetchProducts());
     setProducts(temp);
-  },[temp.length])
+  }, [temp.length]);
 
   return (
     <div>
       <Navbar on="home" />
-      {whatToShow === "Home" ? (
-        <div>
-          <div className="product-actions">
-            <input
-              type="text"
-              name="filterName"
-              id="filterName"
-              className="filter"
-              placeholder="Search"
-            />
-            <button
-              id="filterCategory"
-              onClick={() => toggleShowCheckBox(true)}
-              className="filter"
-            >
-              Category
-              {showCheckBox ? (
-                <div
-                  className="checkbox"
-                  onMouseLeave={() => toggleShowCheckBox(false)}
-                  id="checkBox"
-                >
-                  <div className="row-2">
-                    <input
-                      type="checkbox"
-                      name="filterCategory"
-                      id="filterCategory1"
-                      value="All"
-                      checked
-                      onchange="filterCategory()"
-                    />
-                    All <br />
-                  </div>
-                  <div className="row-2">
-                    <input
-                      type="checkbox"
-                      name="filterCategory"
-                      id="filterCategory2"
-                      value="Book"
-                      onchange="filterCategory()"
-                    />
-                    Book <br />
-                  </div>
-                  <div className="row-2">
-                    <input
-                      type="checkbox"
-                      name="filterCategory"
-                      id="filterCategory3"
-                      value="Food"
-                      onchange="filterCategory()"
-                    />
-                    Food <br />
-                  </div>
-                  <div className="row-2">
-                    <input
-                      type="checkbox"
-                      name="filterCategory"
-                      id="filterCategory4"
-                      value="Electronics"
-                      onchange="filterCategory()"
-                    />
-                    Electronics <br />
-                  </div>
-                  <div className="row-2">
-                    <input
-                      type="checkbox"
-                      name="filterCategory"
-                      id="filterCategory5"
-                      value="Automobile"
-                      onchange="filterCategory()"
-                    />
-                    Automobile <br />
-                  </div>
-                </div>
-              ) : (
-                <></>
-              )}
-            </button>
-            <button onClick={() => setWhatToShow("AddForm")}>
-              <img src={plus} alt="edit" className="butn" />
-            </button>
-          </div>
-          <div className="products">
-            {products.map((product) => 
-              <div className="product">
-                <div className="product-img">
-                  <img
-                    className="image"
-                    src={product.image}
-                    alt={product.altText}
-                  />
-                </div>
-                <div className="product-desc">
-                  <div className="line-1">
-                    <p className="product-name">{product.title}</p>
-                  </div>
-                  <div className="line-5">
-                    <p>$ {product.price}</p>
-                    {product.inCart ? (
-                      <div className="line-4">
-                        <div className="minus b">
-                          <button className="x">-</button>
-                        </div>
-                        <div className="quanity b">
-                          <p className="p">1</p>
-                        </div>
-                        <div className="plus b">
-                          <button className="p">+</button>
-                        </div>
-                      </div>
-                    ) : (
-                      <button>
-                        <img
-                          src={addtocart}
-                          alt="addToCartImg"
-                          className="addToCartImg"
-                        />
-                      </button>
-                    )}
-                  </div>
-                  <div className="line-2">
-                    <p className="product-category">{product.category}</p>
-                    <div className="actions">
+
+      <>
+        {loading ? (
+          <div> loading... </div>
+        ) : (
+          <>
+            {error.isError ? (
+              <div> {error.message}</div>
+            ) : (
+              <>
+                {whatToShow === "Home" ? (
+                  <div>
+                    <div className="product-actions">
+                      <input
+                        type="text"
+                        name="filterName"
+                        id="filterName"
+                        className="filter"
+                        placeholder="Search"
+                      />
                       <button
-                        className="edit-btn"
-                        onClick={() => setWhatToShow("EditForm")}
+                        id="filterCategory"
+                        onClick={() => toggleShowCheckBox(true)}
+                        className="filter"
                       >
-                        Edit
+                        Category
+                        {showCheckBox ? (
+                          <div
+                            className="checkbox"
+                            onMouseLeave={() => toggleShowCheckBox(false)}
+                            id="checkBox"
+                          >
+                            <div className="row-2">
+                              <input
+                                type="checkbox"
+                                name="filterCategory"
+                                id="filterCategory1"
+                                value="All"
+                                checked
+                                onChange="filterCategory()"
+                              />
+                              All <br />
+                            </div>
+                            <div className="row-2">
+                              <input
+                                type="checkbox"
+                                name="filterCategory"
+                                id="filterCategory2"
+                                value="men's clothing"
+                                onChange="filterCategory()"
+                              />
+                              Men's Clothing
+                              <br />
+                            </div>
+                            <div className="row-2">
+                              <input
+                                type="checkbox"
+                                name="filterCategory"
+                                id="filterCategory3"
+                                value="jewelery"
+                                onChange="filterCategory()"
+                              />
+                              Jewelery <br />
+                            </div>
+                            <div className="row-2">
+                              <input
+                                type="checkbox"
+                                name="filterCategory"
+                                id="filterCategory4"
+                                value="electronics"
+                                onChange="filterCategory()"
+                              />
+                              Electronics <br />
+                            </div>
+                            <div className="row-2">
+                              <input
+                                type="checkbox"
+                                name="filterCategory"
+                                id="filterCategory5"
+                                value="women's clothing"
+                                onChange="filterCategory()"
+                              />
+                              Women's Clothing
+                              <br />
+                            </div>
+                          </div>
+                        ) : (
+                          <></>
+                        )}
                       </button>
-                      <button className="delete-btn">Delete</button>
+                      <button onClick={() => setWhatToShow("AddForm")}>
+                        <img src={plus} alt="edit" className="butn" />
+                      </button>
+                    </div>
+                    <div className="products">
+                      {products.map((product) => (
+                        <div key={product.id} className="product">
+                          <div className="product-img">
+                            <img
+                              className="image"
+                              src={product.image}
+                              alt={product.altText}
+                            />
+                          </div>
+                          <div className="product-desc">
+                            <div className="line-1">
+                              <p className="product-name">{product.title}</p>
+                            </div>
+                            <div className="line-5">
+                              <p>$ {product.price}</p>
+                              {product.inCart ? (
+                                <div className="line-4">
+                                  <div className="minus b">
+                                    <button className="x">-</button>
+                                  </div>
+                                  <div className="quanity b">
+                                    <p className="p">1</p>
+                                  </div>
+                                  <div className="plus b">
+                                    <button className="p">+</button>
+                                  </div>
+                                </div>
+                              ) : (
+                                <button>
+                                  <img
+                                    src={addtocart}
+                                    alt="addToCartImg"
+                                    className="addToCartImg"
+                                  />
+                                </button>
+                              )}
+                            </div>
+                            <div className="line-2">
+                              <p className="product-category">
+                                {product.category}
+                              </p>
+                              <div className="actions">
+                                <button
+                                  className="edit-btn"
+                                  onClick={() => setWhatToShow("EditForm")}
+                                >
+                                  Edit
+                                </button>
+                                <button className="delete-btn">Delete</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                </div>
-              </div>
-            )} 
-          </div>
-        </div>
-      ) : (
-        <></>
-      )}
+                ) : (
+                  <></>
+                )}
+              </>
+            )}{" "}
+          </>
+        )}
+      </>
       {whatToShow === "AddForm" ? (
         <div className="add-form margin">
           <div className="form-container">
