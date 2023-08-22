@@ -1,67 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../navbar";
 import "./../../css/home.css";
-import book from "../../assets/book.jpeg";
-import cake from "../../assets/cake.jpeg";
-import choco from "../../assets/choco.jpeg";
-import car from "../../assets/car.jpeg";
-import mobile from "../../assets/mobile.jpeg";
 import addtocart from "../../assets/addcart.png";
 import plus from "../../assets/plus.png";
 import close from "../../assets/close.png";
-
+import { fetchProducts } from "../../redux/actionCreators";
+import store from "../../redux/store";
+import { useSelector } from "react-redux";
+  
 const Home = () => {
-  var [showCheckBox, toggleShowCheckBox] = useState(false);
-  var [whatToShow, setWhatToShow] = useState("Home");
+  let [showCheckBox, toggleShowCheckBox] = useState(false);
+  let [whatToShow, setWhatToShow] = useState("Home");
+  const [products, setProducts] = useState([]);
 
-
-  var products = [
-    {
-      id: 5,
-      name: "Pride and Prejudice",
-      category: "Book",
-      price: 22.99,
-      image: book,
-      altText: "pride_and_prejudice_book",
-      inCart: false,
-    },
-    {
-      id: 6,
-      name: "Delicious Cake",
-      category: "Food",
-      price: 20.5,
-      image: cake,
-      altText: "cake",
-      inCart: true,
-    },
-    {
-      id: 10,
-      name: "Cup of Cappuccino",
-      category: "Food",
-      price: 5.25,
-      image: choco,
-      altText: "cappuccino",
-      inCart: false,
-    },
-    {
-      id: 11,
-      name: "Latest Smartphone",
-      category: "Electronics",
-      price: 599.99,
-      image: mobile,
-      altText: "mobile",
-      inCart: true,
-    },
-    {
-      id: 16,
-      name: "Luxury Car",
-      category: "Automobile",
-      price: 50000.0,
-      image: car,
-      altText: "car",
-      inCart: false,
-    },
-  ];
+  const temp = useSelector(state=>state.products);
+  
+  useEffect(() => { 
+    console.log("hello"); 
+    store.dispatch(fetchProducts()); 
+    setProducts(temp);
+  },[temp.length])
 
   return (
     <div>
@@ -160,7 +118,7 @@ const Home = () => {
                 </div>
                 <div className="product-desc">
                   <div className="line-1">
-                    <p className="product-name">{product.name}</p>
+                    <p className="product-name">{product.title}</p>
                   </div>
                   <div className="line-5">
                     <p>$ {product.price}</p>
@@ -200,7 +158,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-            )}
+            )} 
           </div>
         </div>
       ) : (
