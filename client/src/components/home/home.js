@@ -18,7 +18,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 const Home = () => {
-  
+  const dispatch = useDispatch();
   const temp = useSelector((state) => state.products);
   const tempCart = useSelector((state) => state.cartProducts);
   const loading = useSelector((state) => state.loading);
@@ -34,25 +34,21 @@ const Home = () => {
   let [addUrl, setAddUrl] = useState("");
   let [addCategory, setAddCategory] = useState("");
   let [addPrice, setAddPrice] = useState("");
-  let [filterCat ,setFilterCat] = useState([]) ;
+  let [filterCat, setFilterCat] = useState(["men's clothing", 'jewelery', 'electronics', "women's clothing"]);
 
   useEffect(() => {
-    store.dispatch(fetchProducts());
+    if(temp.length === 0){ store.dispatch(fetchProducts());}
     setProducts(temp);
-  },[]);
-
-  const dispatch = useDispatch();
-
+  }, []);
+  
   useEffect(() => {
     setProducts(temp);
   }, [tempCart.length, temp.length]);
 
-  useEffect(()=>{
-    let s = temp.filter( (product) => 
-      filterCat.includes(product.category)
-    ) 
+  useEffect(() => {
+    let s = temp.filter((product) => filterCat.includes(product.category));
     setProducts(s);
-  },[filterCat.length])
+  }, [filterCat.length]);
 
   function getCartQuantity(id) {
     let a = tempCart.filter((e) => e.id === id)[0];
@@ -71,22 +67,21 @@ const Home = () => {
   }
 
   function filterName(e) {
-    let s = temp.filter( (product) => 
+    let s = temp.filter((product) =>
       product.title.toLowerCase().includes(e.target.value.toLowerCase())
-    ) 
+    );
     setProducts(s);
   }
 
   function filterCategory(e) {
-    if(e.target.checked){
-      let a = [...filterCat,e.target.value];
+    if (e.target.checked) {
+      let a = [...filterCat, e.target.value];
       setFilterCat(a);
-    }else{
+    } else {
       let a = filterCat.filter((p) => p !== e.target.value);
       setFilterCat(a);
     }
   }
-
 
   return (
     <div>
@@ -113,7 +108,9 @@ const Home = () => {
                       />
                       <button
                         id="filterCategory"
-                        onClick={() => {toggleShowCheckBox(true)}}
+                        onClick={() => {
+                          toggleShowCheckBox(true);
+                        }}
                         className="filter"
                       >
                         Category
@@ -131,7 +128,7 @@ const Home = () => {
                                 value="men's clothing"
                                 checked={filterCat.includes("men's clothing")}
                                 onChange={filterCategory}
-                                />
+                              />
                               Men's Clothing
                               <br />
                             </div>
@@ -143,7 +140,7 @@ const Home = () => {
                                 value="jewelery"
                                 checked={filterCat.includes("jewelery")}
                                 onChange={filterCategory}
-                                />
+                              />
                               Jewelery <br />
                             </div>
                             <div className="row-2">
@@ -154,7 +151,7 @@ const Home = () => {
                                 value="electronics"
                                 checked={filterCat.includes("electronics")}
                                 onChange={filterCategory}
-                                />
+                              />
                               Electronics <br />
                             </div>
                             <div className="row-2">
@@ -165,7 +162,7 @@ const Home = () => {
                                 value="women's clothing"
                                 checked={filterCat.includes("women's clothing")}
                                 onChange={filterCategory}
-                                />
+                              />
                               Women's Clothing
                               <br />
                             </div>
@@ -186,7 +183,7 @@ const Home = () => {
                               className="image"
                               src={product.image}
                               alt={product.altText}
-                            />
+                            /> 
                           </div>
                           <div className="product-desc">
                             <div className="line-1">
@@ -297,43 +294,59 @@ const Home = () => {
             </button>
             <div className="Form">
               <label for="AFname">Product Name:</label>
-              <input type="text" id="AFname" name="AFname" 
+              <input
+                type="text"
+                id="AFname"
+                name="AFname"
                 value={addName}
-                onChange={(e) => setAddName(e.target.value)} />
+                onChange={(e) => setAddName(e.target.value)}
+              />
               <label for="AFurl">Product Image Url:</label>
-              <input type="text" id="AFurl" name="AFurl" 
+              <input
+                type="text"
+                id="AFurl"
+                name="AFurl"
                 value={addUrl}
-                onChange={(e) => setAddUrl(e.target.value)} />
+                onChange={(e) => setAddUrl(e.target.value)}
+              />
               <label for="AFprice">Product Price:</label>
-              <input type="text" id="AFprice" name="AFprice" 
+              <input
+                type="text"
+                id="AFprice"
+                name="AFprice"
                 value={addPrice}
-                onChange={(e) => setAddPrice(e.target.value)}/>
+                onChange={(e) => setAddPrice(e.target.value)}
+              />
               <label for="AFcategory">Choose a category:</label>
-              <select name="AFcategory" id="AFcategory" 
-                
-                onChange={(e) => setAddCategory(e.target.value)}>
+              <select
+                name="AFcategory"
+                id="AFcategory"
+                onChange={(e) => setAddCategory(e.target.value)}
+              >
                 <option value="">Choose</option>
                 <option value="men's clothing">Men's Clothing</option>
                 <option value="jewelery">Jewelery</option>
                 <option value="electronics">Electronics</option>
                 <option value="women's clothing">Women's Clothing</option>
               </select>
-              <button className="btn" onClick={ () => {
-                dispatch(
-                  addProduct({
-                    name: addName,
-                    url: addUrl,
-                    price: addPrice,
-                    category: addCategory,
-                  })
-                );
-                setAddName("");
-                setAddCategory("");
-                setAddUrl("");
-                setAddPrice("");
-                setWhatToShow("Home");
-              }
-              }>
+              <button
+                className="btn"
+                onClick={() => {
+                  dispatch(
+                    addProduct({
+                      name: addName,
+                      url: addUrl,
+                      price: addPrice,
+                      category: addCategory,
+                    })
+                  );
+                  setAddName("");
+                  setAddCategory("");
+                  setAddUrl("");
+                  setAddPrice("");
+                  setWhatToShow("Home");
+                }}
+              >
                 Add
               </button>
             </div>
