@@ -17,6 +17,42 @@ export const fetchProductsFailure = (error) => ({
   payload: error,
 });
 
+export const addToCart = (id) => ({
+  type: ActionTypes.ADD_TO_CART,
+  payload: id,
+});
+
+export const increment = (id) => ({
+  type: ActionTypes.INCREMENT_CART_ITEM_COUNT,
+  payload: id,
+});
+
+export const decrement = (id) => ({
+  type: ActionTypes.DECREMENT_CART_ITEM_COUNT,
+  payload: id,
+});
+
+export const removeFromCart = (id) => ({
+  type: ActionTypes.REMOVE_FROM_CART,
+  payload: id,
+});
+
+export const deleteProduct = (id) => ({
+  type: ActionTypes.DELETE_PRODUCT,
+  payload: id,
+});
+
+export const editProduct = (values) => ({
+  type: ActionTypes.EDIT_PRODUCT,
+  payload: values,
+});
+
+export const addProduct = (values) => ({
+  type: ActionTypes.ADD_PRODUCT,
+  payload: values,
+});
+
+
 export const fetchProducts = () => {
   return function (dispatch) {
     dispatch(fetchProductsRequest());
