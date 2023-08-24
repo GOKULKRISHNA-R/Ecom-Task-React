@@ -9,7 +9,7 @@ import {
   fetchProducts,
   addToCart,
   increment,
-  decrement,
+  decrement, 
   removeFromCart,
   deleteProduct,
   editProduct,

@@ -52,7 +52,6 @@ export const addProduct = (values) => ({
   payload: values,
 });
 
-
 export const fetchProducts = () => {
   return function (dispatch) {
     dispatch(fetchProductsRequest());
