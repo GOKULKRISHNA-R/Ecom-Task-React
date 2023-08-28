@@ -1,10 +1,10 @@
 const { DataTypes } = require("sequelize");
-const { sequelize } = require("../db");
-const { category } = require("./category");
-const { users } = require("./users");
+const { Sequelize: sequelize } = require("../db");
+const Users = require("./users");
+const Category = require("./category");
 
-const products = sequelize.define(
-  "products",
+const Products = sequelize.define(
+  "Products",
   {
     productId: {
       type: DataTypes.BIGINT,
@@ -22,27 +22,43 @@ const products = sequelize.define(
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    productCategory: {
-      type: DataTypes.BIGINT,
-      references: {
-        model: category,
-        key: "categoryId",
-      },
-    },
-    createdBy: {
-      type: DataTypes.BIGINT,
-      references: {
-        model: users,
-        key: "userId",
-      },
+    deletedAt: {
+      type: DataTypes.TIME,
+      defaultValue: null,
     },
   },
   {
-    tableName: "products",
-    deletedAt: true,
+    tableName: "Products",
     createdAt: true,
     updatedAt: false,
   }
 );
 
-module.exports = products;
+Products.belongsTo(Users, {
+  foreignKey: "createdBy",
+});
+
+Products.belongsTo(Category, {
+  foreignKey: "productCategory",
+});
+
+Products.sync().then((e) => {
+  console.log(e);
+});
+
+module.exports = Products;
+
+// productCategory: {
+//   type: DataTypes.BIGINT,
+//   references: {
+//     model: category,
+//     key: "categoryId",
+//   },
+// },
+// productCategory: {
+//   type: DataTypes.BIGINT,
+//   references: {
+//     model: users,
+//     key: "userId",
+//   },
+// },

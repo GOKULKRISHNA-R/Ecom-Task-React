@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
-const { sequelize } = require("../db");
+const { Sequelize: sequelize } = require("../db");
 
-const users = sequelize.define(
-  "users",
+const Users = sequelize.define(
+  "Users",
   {
     userId: {
       type: DataTypes.BIGINT,
@@ -23,14 +23,18 @@ const users = sequelize.define(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-    }
+    },
   },
   {
-    tableName: "users",
+    tableName: "Users",
     deletedAt: true,
     createdAt: true,
     updatedAt: false,
   }
 );
 
-module.exports = users;
+Users.sync().then((e) => {
+  console.log(e);
+});
+
+module.exports = Users;

@@ -1,22 +1,26 @@
 const { DataTypes } = require("sequelize");
-const { sequelize } = require("../db"); 
+const { Sequelize: sequelize } = require("../db");
 
-const category = sequelize.define("category", {
-  categoryId: {
-    type: DataTypes.BIGINT,
-    primaryKey: true,
+const Category = sequelize.define(
+  "Category",
+  {
+    categoryId: {
+      type: DataTypes.BIGINT,
+      primaryKey: true,
+    },
+    categoryName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
-  categoryName: {
-    type: DataTypes.STRING,
-    allowNull: false
+  {
+    tableName: "Category",
+    timestamps: false,
   }
-},{
-  tableName: "category",
-  timestamps: false,
+);
+
+Category.sync().then((e) => {
+  console.log(e);
 });
 
-category.sync().then((e) => {
-  console.log(e);
-})
-
-module.exports = category;
+module.exports = Category;
