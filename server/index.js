@@ -1,10 +1,6 @@
-const Axios = require("axios");
-const { dbConnect } = require("./db");
-const Products = require("./models/products");
+const startServer = require("./server");
 
-dbConnect();
-
-
+startServer();
 
 
 // (async () => {

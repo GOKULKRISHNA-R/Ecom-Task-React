@@ -1,0 +1,125 @@
+.body 
+{
+  font-family:sans-serif; 
+  color:whitesmoke;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+h1 {
+  text-align: center;
+}
+
+.bg {
+  width: 30rem;
+  margin: auto;
+  color: black;
+  background: url(./../assets/header-gradient.svg) no-repeat top ;
+  border-radius: 12px;
+  padding: 20px 25px;
+  line-height: 36px;
+  transform: scaleY(-1);
+}
+form{
+    transform: scaleY(-1);
+    display: flex;
+    flex-direction: column;
+}
+
+.inpt {
+  width: 100%;
+  margin: 10px 0;
+  border-radius: 5px;
+  padding: 15px 18px;
+  box-sizing: border-box;
+  background: #fff;
+  color: black;
+}
+
+.btn {
+  transition: all 0.3s ease-in-out;
+  margin: 0px auto;
+  grid-column: 1 / span 2;
+  width: 90px;
+  height: 30;
+  padding: 3px 6px;
+  border-radius: 6px;
+  background-image: linear-gradient(135deg, #feb692 0%, #ea5455 100%);
+  box-shadow: 0 20px 30px -6px rgba(238, 103, 97, 0.5);
+  font-size: 18px;
+  color: white;
+  margin-bottom: 18px;
+}
+
+.btn:hover {
+  transform: translateY(3px);
+  box-shadow: none;
+}
+
+.btn:active {
+  opacity: 0.5;
+}
+.headingsContainer {
+  text-align: center;
+}
+
+.headingsContainer p {
+  color: gray;
+}
+.mainContainer {
+  padding: 16px;
+}
+
+.subcontainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.subcontainer a {
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+span.forgotpsd a {
+  float: right;
+  color: whitesmoke;
+  padding-top: 16px;
+}
+
+.forgotpsd a {
+  color: rgb(74, 146, 235);
+}
+
+.forgotpsd a:link {
+  text-decoration: none;
+}
+
+.register {
+  color: white;
+  text-align: center;
+}
+
+.register a {
+  color: rgb(74, 146, 235);
+}
+
+.register a:link {
+  text-decoration: none;
+}
+
+/* Media queries for the responsiveness of the page */
+@media screen and (max-width: 600px) {
+  form {
+    width: 25rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  form {
+    width: 20rem;
+  }
+}

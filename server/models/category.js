@@ -18,9 +18,4 @@ const Category = sequelize.define(
     timestamps: false,
   }
 );
-
-Category.sync().then((e) => {
-  console.log(e);
-});
-
 module.exports = Category;

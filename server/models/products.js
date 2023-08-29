@@ -42,23 +42,8 @@ Products.belongsTo(Category, {
   foreignKey: "productCategory",
 });
 
-Products.sync().then((e) => {
-  console.log(e);
-});
+const getProducts = async () => {
+  return await Products.findAll();
+}
 
-module.exports = Products;
-
-// productCategory: {
-//   type: DataTypes.BIGINT,
-//   references: {
-//     model: category,
-//     key: "categoryId",
-//   },
-// },
-// productCategory: {
-//   type: DataTypes.BIGINT,
-//   references: {
-//     model: users,
-//     key: "userId",
-//   },
-// },
+module.exports = {getProducts};
