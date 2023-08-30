@@ -1,4 +1,10 @@
 import * as ActionTypes from "./actionTypes";
+import {
+  addProductinDB,
+  addToCartinDB,
+  deleteProductinDB,
+  editProductinDB,
+} from "./actionCreators";
 
 const initialState = {
   loading: false,
@@ -14,7 +20,6 @@ export default function reducer(state = initialState, action) {
         ...state,
         loading: true,
       };
-
     case ActionTypes.FETCH_PRODUCT_SUCCESS: {
       let p = action.payload;
       p = p.map((e) => {
@@ -36,52 +41,36 @@ export default function reducer(state = initialState, action) {
           message: action.payload,
         },
       };
-
     case ActionTypes.ADD_TO_CART: {
-      let cp = state.cartProducts;
-      let p = state.products;
-      let t = p.filter((e) => e.id === action.payload)[0];
-      t = {...t,quantity: 1};
-      cp.push(t);
-      p.forEach((e) => {
-        if (e.id === action.payload) {
-          e.inCart = true;
-        }
-      });
-
+      addToCartinDB(action.payload);
       return {
         ...state,
-        cartProducts: [...cp],
-        products: [...p],
       };
     }
-
     case ActionTypes.INCREMENT_CART_ITEM_COUNT: {
       let cp = state.cartProducts;
       cp.forEach((e) => {
-        if( e.id  === action.payload ){
-          e.quantity++ ;
+        if (e.productId === action.payload) {
+          e.quantity++;
         }
-      })
+      });
       return {
         ...state,
-        cartProducts: [...cp]
-      }
+        cartProducts: [...cp],
+      };
     }
-
     case ActionTypes.DECREMENT_CART_ITEM_COUNT: {
       let cp = state.cartProducts;
       cp.forEach((e) => {
-        if( e.id  === action.payload ){
-          e.quantity-- ;
+        if (e.productId === action.payload) {
+          e.quantity--;
         }
-      })
+      });
       return {
         ...state,
-        cartProducts: [...cp]
-      }
+        cartProducts: [...cp],
+      };
     }
-
     case ActionTypes.REMOVE_FROM_CART: {
       let cp = state.cartProducts;
       let p = state.products;
@@ -98,51 +87,41 @@ export default function reducer(state = initialState, action) {
         products: [...p],
       };
     }
-
     case ActionTypes.DELETE_PRODUCT: {
-      let p = state.products;
-      p = p.filter((e) => e.id !== action.payload);
-      
+      deleteProductinDB(action.payload);
       return {
         ...state,
+      };
+    }
+    case ActionTypes.EDIT_PRODUCT: {
+      editProductinDB(action.payload);
+      return { ...state };
+    }
+    case ActionTypes.ADD_PRODUCT: {
+      addProductinDB(action.payload);
+      return {
+        ...state,
+      };
+    }
+    case ActionTypes.UPDATE_CART: {
+      const x = Object.keys(action.payload);
+      let p = state.products;
+      let t = p.filter((e) => x.includes(e.productId));
+      t.forEach((e) => {
+        e.quantity = Number(action.payload[e.productId]);
+      });
+      p.forEach((e) => {
+        if (Object.keys(action.payload).includes(e.productId)) {
+          e.inCart = true;
+        }
+      });
+
+      return {
+        ...state,
+        cartProducts: [...t],
         products: [...p],
       };
     }
-
-    case ActionTypes.EDIT_PRODUCT: {
-      let p = state.products;
-      p.forEach( (e) => {
-        if(e.id === action.payload.id){
-          e.title = action.payload.name;
-          e.category = action.payload.category;
-          e.price = Number(action.payload.price);
-        }
-        
-      } )
-
-      return {
-        ...state,
-        products: [...p]
-      };
-    }
-
-    case ActionTypes.ADD_PRODUCT: {
-      let p = state.products;
-      p.push({
-        id: p[p.length-1].id + 1,
-        title: action.payload.name,
-        category: action.payload.category,
-        price: Number(action.payload.price),
-        image: action.payload.url,
-        inCart: false,
-      })
-
-      return {
-        ...state,
-        products: [...p]
-      };
-    }
-
     default:
       return state;
   }

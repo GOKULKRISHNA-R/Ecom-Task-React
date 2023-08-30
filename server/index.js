@@ -2,8 +2,10 @@ const startServer = require("./server");
 
 startServer();
 
-
-// (async () => {
+// const Axios = require("axios");
+// const { dbConnect } = require("./db");
+// const { Products } = require("./models/Products");
+// const a = async () => {
 //   try {
 //     await dbConnect();
 //     Axios.get("https://fakestoreapi.com/products")
@@ -17,18 +19,17 @@ startServer();
 //           } else if (e.category === "jewelery") {
 //             p = 3;
 //           } else if (e.category === "women's clothing") {
-//             p = 4;
+//             p = 4; 
 //           }
-//           await Products.create({
-//             productId: e.id,
+//           await Products.create({ 
 //             productName: e.title,
 //             productImageUrl: e.image,
 //             productPrice: e.price,
-//             deletedAt: null,
-//             createdBy: Math.floor(Math.random() * 10) + 1,
+//             deletedAt: null, 
+//             createdBy: 1,
 //             productCategory: p,
 //           })
-//             .then((e) => console.log(e))
+//             .then((e) => console.log(e)) 
 //             .catch((e) => console.log("err :", e));
 //         });
 //       })
@@ -38,4 +39,7 @@ startServer();
 //   } catch (error) {
 //     console.error("Error:", error);
 //   }
-// })();
+// }
+
+// a();
+

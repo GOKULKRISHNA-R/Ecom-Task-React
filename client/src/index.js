@@ -7,7 +7,6 @@ import store from './redux/store';
 import { fetchProducts } from './redux/actionCreators';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-
 root.render(
   <Provider store={store}>
     <App />

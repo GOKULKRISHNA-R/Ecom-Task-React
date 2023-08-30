@@ -22,7 +22,8 @@ h1 {
   line-height: 36px;
   transform: scaleY(-1);
 }
-form{
+
+.authform{
     transform: scaleY(-1);
     display: flex;
     flex-direction: column;
@@ -36,6 +37,7 @@ form{
   box-sizing: border-box;
   background: #fff;
   color: black;
+  text-transform: none;
 }
 
 .btn {

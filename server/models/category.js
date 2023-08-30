@@ -11,6 +11,7 @@ const Category = sequelize.define(
     categoryName: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique:true
     },
   },
   {
@@ -18,4 +19,7 @@ const Category = sequelize.define(
     timestamps: false,
   }
 );
-module.exports = Category;
+
+// Category.sync();
+
+module.exports = {Category};

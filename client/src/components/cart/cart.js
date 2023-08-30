@@ -13,16 +13,30 @@ const Cart = () => {
   const cartProducts = useSelector((state) => state.cartProducts);
 
   function getCartQuantity(id) {
-    let a = cartProducts.filter((e) => e.id === id)[0];
+    let a = cartProducts.filter((e) => e.productId === id)[0];
     return a.quantity;
   }
 
   function getPrice() {
     let sum = 0;
-    cartProducts.map((e) => {
-      sum += Number(Number(e.quantity) * Number(e.price));
+    cartProducts.forEach((e) => {
+      sum += Number(Number(e.quantity) * Number(e.productPrice));
     })
     return sum;
+  }
+
+  function getCategory(id) {
+    let a = "";
+    if (id === 1) {
+      a = "men's clothing";
+    } else if (id === 3) {
+      a = "jewelery";
+    } else if (id === 2) {
+      a = "electronics";
+    } else if (id === 4) {
+      a = "women's clothing";
+    }
+    return a;
   }
 
   return (
@@ -31,35 +45,35 @@ const Cart = () => {
       <div id="cart">
         <div className="cart-products" id="cart-products">
           {cartProducts.map((cartProduct) => (
-            <div key={cartProduct.id} className="cart-product">
+            <div key={cartProduct.productId} className="cart-product">
               <div className="cart-product-img">
                 <img
                   className="cart-product-image"
-                  src={cartProduct.image}
+                  src={cartProduct.productImageUrl}
                   alt="product img"
                 />
               </div>
               <div className="cart-product-desc">
                 <div className="line-3">
-                  <p className="product-name">{cartProduct.title}</p>
-                  <p className="no-wrap">$ {cartProduct.price}</p>
-                  <p className="product-category">{cartProduct.category}</p>
+                  <p className="product-name">{cartProduct.productName}</p>
+                  <p className="no-wrap">$ {cartProduct.productPrice}</p>
+                  <p className="product-category">{getCategory(Number(cartProduct.productCategory))}</p>
                 </div>
                 <div className="line-4">
                   <div className="minus b">
                     <button
                       className="x"
                       onClick={() => {
-                        if (getCartQuantity(cartProduct.id) === 1) {
+                        if (getCartQuantity(cartProduct.productId) === 1) {
                           if (
                             window.confirm(
                               "Do you need to remove this item from cart"
                             ) === true
                           ) {
-                            dispatch(removeFromCart(cartProduct.id));
+                            dispatch(removeFromCart(cartProduct.productId));
                           }
                         } else {
-                          dispatch(decrement(cartProduct.id));
+                          dispatch(decrement(cartProduct.productId));
                         }
                       }}
                     >
@@ -67,16 +81,16 @@ const Cart = () => {
                     </button>
                   </div>
                   <div className="quanity b">
-                    <p className="p">{getCartQuantity(cartProduct.id)}</p>
+                    <p className="p">{getCartQuantity(cartProduct.productId)}</p>
                   </div>
                   <div className="plus b">
                     <button
                       className="p"
                       onClick={() => {
-                        if (getCartQuantity(cartProduct.id) === 5) {
+                        if (getCartQuantity(cartProduct.productId) === 5) {
                           alert("Reached the limit !!");
                         } else {
-                          dispatch(increment(cartProduct.id));
+                          dispatch(increment(cartProduct.productId));
                         }
                       }}
                     >
@@ -86,7 +100,7 @@ const Cart = () => {
                 </div>
                 <div className="line-6">
                   <p className="no-wrap">
-                    Amount : ${cartProduct.price * cartProduct.quantity}
+                    Amount : ${cartProduct.productPrice * cartProduct.quantity}
                   </p>
                 </div>
               </div>

@@ -9,7 +9,7 @@ import {
   fetchProducts,
   addToCart,
   increment,
-  decrement, 
+  decrement,
   removeFromCart,
   deleteProduct,
   editProduct,
@@ -34,52 +34,116 @@ const Home = () => {
   let [addUrl, setAddUrl] = useState("");
   let [addCategory, setAddCategory] = useState("");
   let [addPrice, setAddPrice] = useState("");
-  let [filterCat, setFilterCat] = useState(["men's clothing", 'jewelery', 'electronics', "women's clothing"]);
+  let [filterCat, setFilterCat] = useState(["all"]);
 
   useEffect(() => {
-    if(temp.length === 0){ store.dispatch(fetchProducts());}
+    store.dispatch(fetchProducts());
     setProducts(temp);
   }, []);
-  
+
   useEffect(() => {
     setProducts(temp);
   }, [tempCart.length, temp.length]);
 
   useEffect(() => {
-    let s = temp.filter((product) => filterCat.includes(product.category));
+    let s = [];
+    temp.forEach((e) => {
+      let a;
+      if (e.productCategory === "1") {
+        a = "men's clothing";
+      } else if (e.productCategory === "3") {
+        a = "jewelery";
+      } else if (e.productCategory === "2") {
+        a = "electronics";
+      } else if (e.productCategory === "4") {
+        a = "women's clothing";
+      }
+      filterCat.forEach((c) => {
+        if (c === a) {
+          s.push(e);
+        }
+      });
+      if (a === undefined || a === null) {
+        s = temp;
+      }
+    });
     setProducts(s);
-  }, [filterCat.length]);
+  }, [filterCat.length, filterCat]);
 
   function getCartQuantity(id) {
-    let a = tempCart.filter((e) => e.id === id)[0];
+    let a ;
+    tempCart.forEach(element => {
+      if(element.productId === id){
+        a = element;
+      }
+    });
     return a.quantity;
   }
 
+  function getCategory(id) {
+    let a = "";
+    if (id === 1) {
+      a = "men's clothing";
+    } else if (id === 3) {
+      a = "jewelery";
+    } else if (id === 2) {
+      a = "electronics";
+    } else if (id === 4) {
+      a = "women's clothing";
+    }
+    return a;
+  }
+
+  // function getCategoryId(category) {
+  //   let a = "";
+  //   if (category === "men's clothing") {
+  //     a = 1;
+  //   } else if (category === "jewelery") {
+  //     a = 3;
+  //   } else if (category === "electronics") {
+  //     a = 2;
+  //   } else if (category === "women's clothing") {
+  //     a = 4;
+  //   }
+  //   return a;
+  // }
+
   function setData(id) {
     products.forEach((e) => {
-      if (e.id === id) {
-        setEditId(e.id);
-        setEditName(e.title);
-        setEditCategory(e.category);
-        setEditPrice(e.price);
+      if (e.productId === id) {
+        setEditId(e.productId);
+        setEditName(e.productName);
+        setEditCategory(e.productCategory);
+        setEditPrice(e.productPrice);
       }
     });
   }
 
   function filterName(e) {
     let s = temp.filter((product) =>
-      product.title.toLowerCase().includes(e.target.value.toLowerCase())
+      product.productName.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setProducts(s);
   }
 
   function filterCategory(e) {
-    if (e.target.checked) {
-      let a = [...filterCat, e.target.value];
+    if (e.target.checked && e.target.value === "all") {
+      let a = [
+        "all",
+        "men's clothing",
+        "jewelery",
+        "electronics",
+        "women's clothing",
+      ];
       setFilterCat(a);
     } else {
-      let a = filterCat.filter((p) => p !== e.target.value);
-      setFilterCat(a);
+      if (e.target.checked) {
+        let a = [...filterCat, e.target.value];
+        setFilterCat(a);
+      } else {
+        let a = filterCat.filter((p) => p !== e.target.value);
+        setFilterCat(a);
+      }
     }
   }
 
@@ -120,6 +184,18 @@ const Home = () => {
                             onMouseLeave={() => toggleShowCheckBox(false)}
                             id="checkBox"
                           >
+                            <div className="row-2">
+                              <input
+                                type="checkbox"
+                                name="filterCategory"
+                                id="filterCategory2"
+                                value="all"
+                                checked={filterCat.includes("all")}
+                                onChange={filterCategory}
+                              />
+                              All
+                              <br />
+                            </div>
                             <div className="row-2">
                               <input
                                 type="checkbox"
@@ -177,38 +253,40 @@ const Home = () => {
                     </div>
                     <div className="products">
                       {products.map((product) => (
-                        <div key={product.id} className="product">
+                        <div key={product.productId} className="product">
                           <div className="product-img">
                             <img
                               className="image"
-                              src={product.image}
+                              src={product.productImageUrl}
                               alt={product.altText}
-                            /> 
+                            />
                           </div>
                           <div className="product-desc">
                             <div className="line-1">
-                              <p className="product-name">{product.title}</p>
+                              <p className="product-name">
+                                {product.productName}
+                              </p>
                             </div>
                             <div className="line-5">
-                              <p>$ {product.price}</p>
+                              <p>$ {product.productPrice}</p>
                               {product.inCart ? (
                                 <div className="line-4">
                                   <div className="minus b">
                                     <button
                                       className="x"
                                       onClick={() => {
-                                        if (getCartQuantity(product.id) === 1) {
+                                        if (getCartQuantity(product.productId) === 1) {
                                           if (
                                             window.confirm(
                                               "Do you need to remove this item from cart"
                                             ) === true
                                           ) {
                                             dispatch(
-                                              removeFromCart(product.id)
+                                              removeFromCart(product.productId)
                                             );
                                           }
                                         } else {
-                                          dispatch(decrement(product.id));
+                                          dispatch(decrement(product.productId));
                                         }
                                       }}
                                     >
@@ -217,17 +295,17 @@ const Home = () => {
                                   </div>
                                   <div className="quanity b">
                                     <p className="p">
-                                      {getCartQuantity(product.id)}
+                                      {getCartQuantity(product.productId)}
                                     </p>
                                   </div>
                                   <div className="plus b">
                                     <button
                                       className="p"
                                       onClick={() => {
-                                        if (getCartQuantity(product.id) === 5) {
+                                        if (getCartQuantity(product.productId) === 5) {
                                           alert("Reached the limit !!");
                                         } else {
-                                          dispatch(increment(product.id));
+                                          dispatch(increment(product.productId));
                                         }
                                       }}
                                     >
@@ -238,7 +316,13 @@ const Home = () => {
                               ) : (
                                 <button
                                   onClick={() => {
-                                    dispatch(addToCart(product.id));
+                                    dispatch(
+                                      addToCart({
+                                        userId: Number(localStorage.getItem("userId")),
+                                        id: Number(product.productId),
+                                        quantity: 1,
+                                      })
+                                    );
                                   }}
                                 >
                                   <img
@@ -251,13 +335,13 @@ const Home = () => {
                             </div>
                             <div className="line-2">
                               <p className="product-category">
-                                {product.category}
+                                {getCategory(Number(product.productCategory))}
                               </p>
                               <div className="actions">
                                 <button
                                   className="edit-btn"
                                   onClick={() => {
-                                    setData(product.id);
+                                    setData(product.productId);
                                     setWhatToShow("EditForm");
                                   }}
                                 >
@@ -266,7 +350,7 @@ const Home = () => {
                                 <button
                                   className="delete-btn"
                                   onClick={() => {
-                                    dispatch(deleteProduct(product.id));
+                                    dispatch(deleteProduct(product.productId));
                                   }}
                                 >
                                   Delete
@@ -292,64 +376,67 @@ const Home = () => {
             <button className="close" onClick={() => setWhatToShow("Home")}>
               <img src={close} alt="close" className="butn" />
             </button>
-            <div className="Form">
-              <label for="AFname">Product Name:</label>
+            <form
+              className="Form"
+              onSubmit={() => {
+                dispatch(
+                  addProduct({
+                    userId: localStorage.getItem("userId"),
+                    name: addName,
+                    url: addUrl,
+                    price: addPrice,
+                    category: addCategory,
+                  })
+                );
+                setAddName("");
+                setAddCategory("");
+                setAddUrl("");
+                setAddPrice("");
+
+                setWhatToShow("Home");
+              }}
+            >
+              <label htmlFor="AFname">Product Name:</label>
               <input
                 type="text"
                 id="AFname"
                 name="AFname"
                 value={addName}
+                required
                 onChange={(e) => setAddName(e.target.value)}
               />
-              <label for="AFurl">Product Image Url:</label>
+              <label htmlFor="AFurl">Product Image Url:</label>
               <input
+                required
                 type="text"
                 id="AFurl"
                 name="AFurl"
                 value={addUrl}
                 onChange={(e) => setAddUrl(e.target.value)}
               />
-              <label for="AFprice">Product Price:</label>
+              <label htmlFor="AFprice">Product Price:</label>
               <input
+                required
                 type="text"
                 id="AFprice"
                 name="AFprice"
                 value={addPrice}
                 onChange={(e) => setAddPrice(e.target.value)}
               />
-              <label for="AFcategory">Choose a category:</label>
+              <label htmlFor="AFcategory">Choose a category:</label>
               <select
                 name="AFcategory"
                 id="AFcategory"
                 onChange={(e) => setAddCategory(e.target.value)}
               >
-                <option value="">Choose</option>
-                <option value="men's clothing">Men's Clothing</option>
-                <option value="jewelery">Jewelery</option>
-                <option value="electronics">Electronics</option>
-                <option value="women's clothing">Women's Clothing</option>
+                <option value="0">Choose</option>
+                <option value="1">Men's Clothing</option>
+                <option value="3">Jewelery</option>
+                <option value="2">Electronics</option>
+                <option value="4">Women's Clothing</option>
               </select>
-              <button
-                className="btn"
-                onClick={() => {
-                  dispatch(
-                    addProduct({
-                      name: addName,
-                      url: addUrl,
-                      price: addPrice,
-                      category: addCategory,
-                    })
-                  );
-                  setAddName("");
-                  setAddCategory("");
-                  setAddUrl("");
-                  setAddPrice("");
-                  setWhatToShow("Home");
-                }}
-              >
-                Add
-              </button>
-            </div>
+              <input className="btn" type="submit" value={"Add"} />
+            </form>
           </div>
         </div>
       ) : (
@@ -362,7 +449,7 @@ const Home = () => {
               <img src={close} alt="close" className="butn" />
             </button>
             <div className="Form">
-              <label for="UFname">Product Name:</label>
+              <label htmlFor="UFname">Product Name:</label>
               <input
                 type="text"
                 id="UFname"
@@ -371,7 +458,7 @@ const Home = () => {
                 defaultValue="Product Name"
                 onChange={(e) => setEditName(e.target.value)}
               />
-              <label for="UFprice">Product Price:</label>
+              <label htmlFor="UFprice">Product Price:</label>
               <input
                 type="text"
                 id="UFprice"
@@ -379,7 +466,7 @@ const Home = () => {
                 value={editPrice}
                 onChange={(e) => setEditPrice(e.target.value)}
               />
-              <label for="UFcategory">Choose a category:</label>
+              <label htmlFor="UFcategory">Choose a category:</label>
               <select
                 name="UFcategory"
                 id="UFcategory"
