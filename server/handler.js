@@ -22,8 +22,8 @@ const addUser = async (req, res) => {
       password: req.payload.password,
     };
     const k = await addUserToPostgres(newUser);
-    Cart.create({userId:k.dataValues.userId,cartProducts:{}});
-    return res.response(k);
+    Cart.create({ userId: Number(k.dataValues.userId), cartProducts: {} });
+    return res.response(k.dataValues);
   } catch (error) {
     return res
       .response({ message: "An error occurred during signup" })
@@ -38,7 +38,10 @@ const authenticateUser = async (req, res) => {
       password: req.payload.password,
     };
     const k = await findUser(user);
-    return k;
+    console.log("🚀 ~ file: handler.js:43 ~ authenticateUser ~ dataValues:", k.dataValues)
+    return res
+      .response(k.dataValues)
+      .code(200);
   } catch {
     return res
       .response({ message: "An error occurred during signin" })
@@ -81,7 +84,7 @@ const deleteProduct = async (req, res) => {
 };
 
 const addProduct = async (req, res) => {
-  try {    
+  try {
     const productData = {
       createdBy: req.payload.createdBy,
       productImageUrl: req.payload.productImageUrl,
@@ -98,7 +101,7 @@ const addProduct = async (req, res) => {
   }
 };
 
-const addToCart = async (req,res) => {
+const addToCart = async (req, res) => {
   try {
     const a = await addToCartinDB(req.payload);
     return res.response(a).code(200);
@@ -109,16 +112,16 @@ const addToCart = async (req,res) => {
   }
 };
 
-const getCartQuantityinDB = async (req,res) => {
-  try{
+const getCartQuantityinDB = async (req, res) => {
+  try {
     const a = await getCartinDB(req.payload.userId);
     return res.response(a).code(200);
-  }catch {
+  } catch {
     return res
       .response({ message: "An error occurred during editing" })
       .code(500);
   }
-}
+};
 
 module.exports = {
   addToCart,
@@ -126,5 +129,7 @@ module.exports = {
   addUser,
   authenticateUser,
   editProduct,
-  deleteProduct,addProduct,getCartQuantityinDB,
+  deleteProduct,
+  addProduct,
+  getCartQuantityinDB,
 };

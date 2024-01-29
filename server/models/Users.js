@@ -44,13 +44,15 @@ const Users = sequelize.define(
 // Users.sync();
 
 async function addUserToPostgres(User) {
+  console.log("🚀 ~ file: users.js:47 ~ addUserToPostgres ~ User:", User)
   return await Users.create(User);
 }
 
 async function findUser(User) {
-  return await Users.findOne({
+  const a = await Users.findOne({
     where: { emailId: User.emailId, password: User.password },
   });
+  return a;
 }
 
 module.exports = { addUserToPostgres, findUser, Users };

@@ -13,7 +13,7 @@ const Signin = () => {
     const res = await Axios.post("http://localhost:5500/signin", {
       email,
       password,
-    });
+    }); 
     if( res.status === 200 ) {
       alert("yes");
       localStorage.setItem("isLoggedIn",true);

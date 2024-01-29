@@ -37,6 +37,6 @@ const addToCartinDB = async (data) => {
   return a;
 };
 
-Cart.sync();
+// Cart.sync();
 
 module.exports = { Cart, addToCartinDB, getCartinDB };
